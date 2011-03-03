@@ -1,0 +1,51 @@
+Guidelines for new live_libs classes
+
+1. Howto write a new class
+
+	
+	<class name> =  Class(<constructor>)
+		creates a class with function in constructor
+
+	<class name>:inherit(<other class name>)
+		if you want to inherit from any class. Everything should inherit directly or indirectly from object, because here the instance is added to the _internal_object_table
+
+If you want to call the constructor of the superclass write the following in the constructor of the current class:
+	
+	<super class name>.<construct>(self, <arguments>)
+More on Classes and HUMP: http://vrld.github.com/hump/
+
+2. Commenting
+	
+	In order to work the comment parser needs the following comment 'marks':
+
+
+	-- @ <class name>:<short description>
+		This marks a new class.
+		Note: only oneliners are working
+
+	-- # <description>
+		This marks a new method.
+		Note: limitation of class comments apply
+
+	any '--' without marks will not be included in the helpfile
+	
+	Example:
+		-- @Drawable: base class for all drawable stuff
+		Drawable = Class(function(self, x, y, color)
+			self.color = color or hlpr.color("white",255)
+			-- call constructor of Object class
+			Object.construct(self)
+			self.position = Vector(x or 0,y or 0)
+		end)
+		Drawable:inherit(Object)
+
+		-- #can be called via wrapX(max) or wrapX(min,max)
+		function Drawable:wrapX(min, max)
+			if min and max then
+				self:wrap("x", min, max)
+			elseif min and not max then 
+				self:wrap("x", 0, min)
+			end
+		end
+
+
