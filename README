@@ -8,5 +8,5 @@ NOTE: STILL IN DEVELOPMENT - EVERYTHING CAN CHANGE
 -- live.reset = true -- calls love.load everytime you save the file, if set to false it will only be called when starting LÖVE
 -- live.clearFlag = false -- overrides the clear() function in love.run
 
-"live_libs" is a collection of various functions and a classes which should accelerate the live coding process. 
-Dokumentation: live_libs/docs/index.html
+"lib" is a collection of various functions and a classes which should accelerate the live coding process. 
+Dokumentation: lib/docs/index.html
