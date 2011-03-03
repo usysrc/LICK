@@ -1,0 +1,12 @@
+"LICK is a small live coding environment for LÖVE. It basically just is a customized love.run which presses all errors to the command line(or in debug mode on screen). And reloads the “main.lua” everytime it is being change
+
+NOTE: STILL IN DEVELOPMENT - EVERYTHING CAN CHANGE
+
+-- optional parameters
+-- live.file = "<INSERT CUSTOM FILE HERE>" -- default is "main.lua"
+-- live.debug = true -- displays errors in love window
+-- live.reset = true -- calls love.load everytime you save the file, if set to false it will only be called when starting LÖVE
+-- live.clearFlag = false -- overrides the clear() function in love.run
+
+"live_libs" is a collection of various functions and a classes which should accelerate the live coding process. 
+Dokumentation: live_libs/docs/index.html
