@@ -1,4 +1,4 @@
-"LICK is a small live coding environment for LÖVE. It basically just is a customized love.run which presses all errors to the command line(or in debug mode on screen). And reloads the “main.lua” everytime it is being change
+"LICK is a small live coding environment for LÖVE. It basically just is a customized love.run which presses all errors to the command line(or in debug mode on screen). And reloads the “main.lua” everytime it is being changed
 
 NOTE: STILL IN DEVELOPMENT - EVERYTHING CAN CHANGE
 
