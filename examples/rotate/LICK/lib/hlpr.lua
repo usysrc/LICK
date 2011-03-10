@@ -8,7 +8,16 @@ sin = math.sin
 deg = math.deg
 rad = math.rad
 
+State = State or {}
 
+function declare(t)
+	for i,v in pairs(t) do
+		if not State[i] then
+			State[i] = v
+			_G[i] = State[i]
+		end
+	end
+end
 require "LICK/lib/color"
 module(...,package.seeall)
 
@@ -76,7 +85,6 @@ setScissor = love.graphics.setScissor
 toggleFullscreen = love.graphics.toggleFullscreen
 translate = love.graphics.translate
 triangle = love.graphics.triangle
-
 
 
 
