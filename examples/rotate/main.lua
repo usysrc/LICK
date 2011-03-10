@@ -19,8 +19,8 @@ end
 
 function love.draw()
 	ez.cls(10)
-	push()
+	ez.push()
 	ez.rotateCenter(x)
 	circle:draw("fill")
-	pop()
+	ez.pop()
 end
