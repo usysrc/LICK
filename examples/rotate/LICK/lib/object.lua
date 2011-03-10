@@ -101,7 +101,7 @@ function SCSynth:free()
 		    "i",
 		    self.nodeid,
 		    "i",
-		    0,
+		    0
 		}
 	}
 
@@ -194,18 +194,82 @@ end
 
 
 
+----------------------------------------
+-- Experimental Objects
+----------------------------------------
+
+
 --[[
 	LINE
 --]]
 -- @Line: draw a line
-Line = Class(function(self, x, y, tx, ty)
-	self.tx = tx or 0
-	self.ty = ty or 0
-	-- call constructor of Drawable
-	Drawable.construct()
-	
-end)
-Line:inherit(Object)
+Line = Class(function(self, x, y, tx, ty, color) -- wats the dealio for polylines?
+		self.x = x or 0
+		self.y = y or 0
+		self.tx = tx or 0
+		self.ty = ty or 0
+		-- call constructor of Drawable
+		Drawable.construct(self, x, y, color)
+		
+	     end)
+Line:inherit(Drawable)
+-- TODO: FIX the :set("key", value) ... dunno how it works..!
+
+-- #draw the line
+function Line:draw(width, style)
+   local width=width or 1
+   if style ~= "smooth" and style ~= "rough" then
+      style = "smooth"
+   end
+   love.graphics.setLine(width, style)
+   love.graphics.setColor(unpack(self.color))
+   love.graphics.line(self.position.x, self.position.y, self.tx, self.ty)
+end
+
+
+--[[
+	IMAGE
+--]]
+-- @Image: Image from file
+Image = Class(function(self, file, x, y, color, size, orientation)
+		 self.image = love.graphics.newImage(file)
+		 -- put positions, size, orientation...
+		 
+		 -- call constructor of Drawable
+		 Drawable.construct(self,x,y,color)
+	      end)
+Image:inherit(Drawable)
+
+-- #draw the image
+function Image:draw()
+	love.graphics.setColor(unpack(self.color))
+	love.graphics.draw(self.image, self.position.x, self.position.y)
+end
+
+--[[
+	POINT
+--]]
+-- @Point
+Point = Class(function(self, x, y, color, size, style)
+		 local color=color or ""
+		 local size=size or 1
+		 local style=style or "smooth"
+		 
+		 -- should this be here? or in the constructor?
+		 self.size = size
+		 self.style = style
+
+		 -- call constructor of Drawable		 
+		 Drawable.construct(self,x,y,color)
+	      end)
+Point:inherit(Drawable)
+
+-- #draw the point
+function Point:draw()
+	love.graphics.setColor(unpack(self.color))
+	love.graphics.setPoint(self.size, self.style)
+	love.graphics.point(self.position.x, self.position.y)
+end
 
 
 -- EXAMPLE:

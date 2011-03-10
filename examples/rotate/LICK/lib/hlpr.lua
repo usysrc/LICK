@@ -1,23 +1,83 @@
 -- hlpr libary: it's not about nice coding, ist about fast and easy coding
 -- by Rukano and Headchant, 2011
-pi = math.pi
 
-setColor = love.graphics.setColor
-rectangle = love.graphics.rectangle
-getWidth = love.graphics.getWidth
-getHeight = love.graphics.getHeight
-push = love.graphics.push
-pop = love.graphics.pop
-translate = love.graphics.translate
-rotate = love.graphics.rotate
-scale = love.graphics.scale
-circle = love.graphics.circle
+
+-- global math
+pi = math.pi
 sin = math.sin
 deg = math.deg
 rad = math.rad
 
 
 require "LICK/lib/color"
+
+-- syntax shortcuts
+checkMode = love.graphics.checkMode
+circle = love.graphics.circle
+clear = love.graphics.clear
+draw = love.graphics.draw
+drawq = love.graphics.drawq
+getBackgroundColor = love.graphics.getBackgroundColor
+getBlendMode = love.graphics.getBlendMode
+getCaption =love.graphics.getCaption
+getColor = love.graphics.getColor
+getColorMode = love.graphics.getColorMode
+getFont = love.graphics.getFont
+getHeight = love.graphics.getHeight
+getLineStipple = love.graphics.getLineStipple
+getLineStyle = love.graphics.getLineStyle
+getLineWidth = love.graphics.getLineWidth
+getMaxPointSize = love.graphics.getMaxPointSize
+getModes = love.graphics.getModes
+getPointSize = love.graphics.getPointSize
+getPointStyle = love.graphics.getPointStyle
+getScissor = love.graphics.getScissor
+getWidth = love.graphics.getWidth
+isCreated = love.graphics.isCreated
+line = love.graphics.line
+newFont = love.graphics.newFont
+newFrameBuffer = love.graphics.newFramebuffer
+newImage = love.graphics.newImage
+newImageFont = love.graphics.newImageFont
+newParticleSystem = love.graphics.newParticleSystem
+newQuad = love.graphics.newQuad
+newScreenshot = love.graphics.newScreenshot
+newSpriteBatch = love.graphics.newSpriteBatch
+point = love.graphics.point
+polygon = love.graphics.polygon
+pop = love.graphics.pop
+present = love.graphics.present
+print = love.graphics.print
+printf = love.graphics.printf
+push = love.graphics.push
+quad = love.graphics.quad
+rectagle = love.graphics.rectangle
+reset = love.graphics.reset
+rotate = love.graphics.rotate
+scale = love.graphics.scale
+setBackgroundColor = love.graphics.setBackgroundColor
+setBlendMode = love.graphics.setBlendMode
+setCaption = love.graphics.setCaption
+setColor = love.graphics.setColor
+setColorMode = love.graphics.setColorMode
+setFont = love.graphics.setFont
+setIcon = love.graphics.setIcon
+setLine = love.graphics.setLine
+setLineStipple = love.graphics.setLineStipple
+setLineStyle = love.graphics.setLineStyle
+setLineWidth = love.graphics.setLineWidth
+setMode = love.graphics.setMode
+setPoint = love.graphics.setPoint
+setPointSize = love.graphics.setPointSize
+setPointStyle = love.graphics.setPointStyle
+setRenderTarget = love.graphics.setRenderTarget
+setScissor = love.graphics.setScissor
+toggleFullscreen = love.graphics.toggleFullscreen
+translate = love.graphics.translate
+triangle = love.graphics.triangle
+
+
+
 
 module(...,package.seeall)
 
@@ -38,7 +98,7 @@ function color(r, g,b,a)
 	return color
 end
 
--- clip withing range (by redlock)
+-- clip withing range 
 function clip(n,min,max)
 	return math.min(math.max(n, min or -math.huge), max or math.huge) 
 end
