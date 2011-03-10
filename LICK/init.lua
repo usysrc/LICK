@@ -1,2 +1,3 @@
-require "LICK/live.lua"
+require "LICK/lick"
+
 
