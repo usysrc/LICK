@@ -10,6 +10,7 @@ rad = math.rad
 
 
 require "LICK/lib/color"
+module(...,package.seeall)
 
 -- syntax shortcuts
 checkMode = love.graphics.checkMode
@@ -79,7 +80,6 @@ triangle = love.graphics.triangle
 
 
 
-module(...,package.seeall)
 
 
 function color(r, g,b,a)
