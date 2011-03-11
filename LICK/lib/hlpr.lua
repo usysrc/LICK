@@ -139,14 +139,14 @@ function b()
 end
 
 -- fill the screen with translucent black
-function clear(alpha)
+function clear_black(alpha)
 	love.graphics.setColor(0,0,0,alpha)
 	love.graphics.rectangle("fill", 0,0,800,600)
 end
 
 -- shorter clear
 function cls(alpha)
-	clear(alpha)
+	clear_black(alpha)
 end
 
 -- one time clear
@@ -329,7 +329,7 @@ function sin()
 end
 
 -- updates all objects in the _object table
-function update_objects()
+function update_objects(dt)
 	for i,v in ipairs(_internal_object_table) do
 		v:update(dt)
 	end
