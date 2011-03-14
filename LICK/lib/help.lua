@@ -35,7 +35,8 @@ function generate()
 				local output = ""
 			
 			end
-			dp,ep = string.find(line, ":")
+			local dp,ep = string.find(line, ":")
+			if dp then
 			name = line:sub(e+1, dp-1 or 0)
 			print(name)
 			table.insert(classes,name)
@@ -44,6 +45,7 @@ function generate()
 			output = output .._newclasstitle .. name..tab..tab..line:sub(dp+1) ..newclasstitle_
 						found_methods = 0
 			found_classes = found_classes + 1
+			end
 		elseif b1 and e1 and not string.find(line,"require")  then
 			output = output .."<h4>"..tab..line:sub(e1+2).."</h4>"..tab..tab.."<i> Constructor</i>"
 
@@ -84,8 +86,9 @@ end
 
 function writeClassFile(name, output)
 	dir = love.filesystem.getWorkingDirectory( )
+	print(dir)
 	--print("touch "..dir.."/"..help_filename)
-	local path = dir.."/live_testproject/"..help_filename.."classes/"..name..".html"
+	local path = dir.."/shittygames/"..help_filename.."classes/"..name..".html"
 	os.execute("touch "..path)
 	
 	local helpfile = io.open(path, "w" )
@@ -97,7 +100,7 @@ end
 function writeFile(name, output)
 	dir = love.filesystem.getWorkingDirectory( )
 	--print("touch "..dir.."/"..help_filename)
-	local path = dir.."/live_testproject/"..help_filename..name..".html"
+	local path = dir.."/shittygames/"..help_filename..name..".html"
 	os.execute("touch "..path)
 	
 	local helpfile = io.open(path, "w" )
