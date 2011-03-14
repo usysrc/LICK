@@ -178,6 +178,7 @@ end
 Circle = Class(function(self, x, y, r, s, color)
 	self.r = r or 10
 	self.s = s or 16
+	self.color = color
 	-- call constructor of Drawable
 	Drawable.construct(self,x,y,color)
 end)
