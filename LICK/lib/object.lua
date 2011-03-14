@@ -178,7 +178,6 @@ end
 Circle = Class(function(self, x, y, r, s, color)
 	self.r = r or 10
 	self.s = s or 16
-	self.color = color
 	-- call constructor of Drawable
 	Drawable.construct(self,x,y,color)
 end)
@@ -252,7 +251,7 @@ end
 --[[
 	POINT
 --]]
--- @Point
+-- @Point: is a point
 Point = Class(function(self, x, y, color, size, style)
 		 local color=color or ""
 		 local size=size or 1
@@ -279,7 +278,7 @@ end
 --[[
 	Sequencer
 --]]
-
+--@Sequencer: a simple Sequencer with callback functions on every beat, bar or phrase
 Sequencer = Class(function(self,bpm, timeSig, phraseLength)
 	self.timer = 0
 	self.frame = 0
@@ -299,6 +298,7 @@ Sequencer = Class(function(self,bpm, timeSig, phraseLength)
 end)
 Sequencer:inherit(Object)
 
+-- #counts the time and calls the appropriate functions
 function Sequencer:update(dt)
 	self.timer = self.timer + dt
 	self.frame = self.frame + 1
@@ -319,8 +319,133 @@ function Sequencer:update(dt)
 		end
 		
 	end
-
 end
+
+--[[
+	POLYGON
+--]]
+-- @Polygon: some vertice stuff
+Polygon = Class(function(self, vertices, color, style)
+		   local color=color or {255,255,255,255}
+
+		   self.style = style or "line"
+
+		   -- todo: ask for odd/even number of table
+		   if type(vertices) ~= "table" then
+		      print("vertices has to be a even table!")
+		   end
+
+		   self.vertices = vertices
+
+		   -- first vertice = x, y
+		   local x=vertices[1]
+		   local y=vertices[2]
+
+		   -- TODO: compute center
+
+		   -- call constructor of Drawable		 
+		   Drawable.construct(self,x,y,color)
+		end)
+Polygon:inherit(Drawable)
+
+-- #draw the polygon
+function Polygon:draw(style)
+   local style=style or self.style
+   love.graphics.setColor(unpack(self.color))
+   love.graphics.polygon(style, self.vertices)
+end
+
+--[[
+	RECT
+--]]
+-- @Rect: is a rectangle
+Rect = Class(function(self, x, y, width, height, color, style)
+		   local color=color or {255,255,255,255}
+		   self.style = style or "line"
+		   self.width = width
+		   self.height = height
+
+		   -- TODO: compute center
+
+		   -- call constructor of Drawable		 
+		   Drawable.construct(self,x,y,color)
+		end)
+Rect:inherit(Drawable)
+
+-- #draw the rectangle
+function Rect:draw(style)
+   local style=style or self.style
+   love.graphics.setColor(unpack(self.color))
+   love.graphics.rectangle(style, self.position.x, self.position.y, self.width, self.height)
+end
+
+
+--[[
+	TRIANGLE
+--]]
+-- @Triangle: has three sides
+Triangle = Class(function(self, vertices, color, style)
+		   local color=color or {255,255,255,255}
+		   self.style = style or "line"
+
+		   -- todo: ask for 6 number of table
+		   if type(vertices) ~= "table" then
+		      print("vertices has to be a even table!")
+		   end
+
+		   self.vertices = vertices
+
+		   -- first vertice = x, y
+		   local x=vertices[1]
+		   local y=vertices[2]
+
+		   -- TODO: compute center
+
+		   -- call constructor of Drawable		 
+		   Drawable.construct(self,x,y,color)
+		end)
+Triangle:inherit(Drawable)
+
+-- #draw the triangle
+function Triangle:draw(style)
+   local style=style or self.style
+   love.graphics.setColor(unpack(self.color))
+   love.graphics.triangle(style, unpack(self.vertices))
+end
+
+--[[
+	TEXT
+--]]
+-- @Text: characters
+Text = Class(function(self, x, y, text, rotation, scaleX, scaleY)
+		local color=color or {255,255,255,255}
+		self.text=text or "LICK WITH LOVE"
+		self.rotation=rotation or 0
+		self.scaleX = scaleX or 1
+		self.scaleY = scaleY or 1
+		self.font = "implement fonts?..."
+
+		-- TODO: compute center
+
+		-- call constructor of Drawable		 
+		Drawable.construct(self,x,y,color)
+	     end)
+Text:inherit(Drawable)
+
+-- #display text on screen
+function Text:draw(text)
+   local text = text or self.text
+   love.graphics.setColor(unpack(self.color))
+   love.graphics.print(
+      text,
+      self.position.x,
+      self.position.y,
+      self.rotationr,
+      self.scaleX,
+      self.scaleY
+   )
+end
+
 
 -- EXAMPLE:
 -- (put in love.load):

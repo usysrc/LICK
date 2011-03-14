@@ -32,6 +32,7 @@ local upack = vstruct.unpack
 
 osc.client = {}
 osc.client.host = "localhost"
+osc.client.ip = nil
 osc.client.port = 57110
 osc.client.timeout = 0
 
@@ -43,7 +44,7 @@ IMMEDIATE = string.rep('0', 31) .. '1'
 
 
 function osc.client:send( data )
-	local ip, port = assert(socket.dns.toip(osc.client.host)), osc.client.port
+	local ip, port = osc.client.ip or assert(socket.dns.toip(osc.client.host)), osc.client.port
 	-- create a new UDP object
 	local udp = assert(socket.udp())
 	udp:settimeout(0)
