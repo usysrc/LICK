@@ -78,7 +78,7 @@ function lick.draw()
 	end
 	if lick.debug and lick.debugoutput then 
 		love.graphics.setColor(255,255,255,120)
-		love.graphics.print(lick.debugoutput, 0, 0)
+		love.graphics.printf(lick.debugoutput, (1024/2)+50, 0, 400, "right")
 	 end
 	drawok_old = not drawok
 end
