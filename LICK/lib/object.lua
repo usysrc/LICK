@@ -447,6 +447,55 @@ function Text:draw(text)
 end
 
 
+--[[
+	Sequencer
+--]]
+
+Sequencer = Class(function(self,bpm, timeSig, phraseLength)
+	self.timer = 0
+	self.frame = 0
+	self.beat = 1
+	self.bar = 1
+	self.phrase = 1
+	self.bpm = bpm or 120
+
+	self.timeSignature = timeSig or 8
+	self.phraseLength = phraseLength or 4
+
+	self.newBeat = function() end
+	self.newBar = function() end
+	self.newPhrase = function() end
+
+	Object.construct(self)
+end)
+Sequencer:inherit(Object)
+
+function Sequencer:update(dt)
+	self.timer = self.timer + dt
+	self.frame = self.frame + 1
+	local _fps = 30
+	local fpm = 30 * _fps
+	--print(math.floor(fpm))
+	if self.frame%(math.floor(fpm)/self.bpm) == 0 then
+		self.beat = self.beat + 1
+		self.newBeat()
+		if self.beat%self.timeSignature == 0 then
+			self.bar = self.bar + 1
+			self.newBar()
+			if self.bar%self.phraseLength == 0 then
+				self.phrase = self.phrase + 1
+				self.newPhrase()
+			end
+
+		end
+		
+	end
+
+end
+
+
+
+
 -- EXAMPLE:
 -- (put in love.load):
 -- 	coco = Circle(300,300)
