@@ -1,8 +1,0 @@
-loveOSC is a fork of luaOSC(http://luaforge.net/projects/luaosc/) which implements the Open Sound Control Protocol (http://opensoundcontrol.org/) but substitutes the LPACK dependency with VSTRUCT for greater portability
-
-
-The testproject sends a OSC message to a server on port 57110, which is Supercolliders OSC port. It also receives OSC messages on port 7771.
-
-Features:
-- Client, sending/encoding OSC messages/bundles
-- Server, receiving/decoding/handle OSC messages
