@@ -9,6 +9,7 @@ lick.file = "main.lua"
 lick.debug = false
 lick.reset = false
 lick.clearFlag = false
+lick.sleepTime = (love.canvas) and (0.001) or 1
 
 function handle(err)
 	return "ERROR: " .. err
@@ -96,11 +97,11 @@ function love.run()
             dt = love.timer.getDelta()
         end
        -- if love.update then love.update(dt) end -- will pass 0 if love.timer is disabled
-	lick.update(dt)
+	      lick.update(dt)
         if love.graphics then
            if not lick.clearFlag then love.graphics.clear() end
            -- if love.draw then love.draw() end
-	    lick.draw()
+	      lick.draw()
         end
 
         -- Process events.
@@ -118,7 +119,7 @@ function love.run()
             end
         end
 
-        if love.timer then love.timer.sleep(1) end
+        if love.timer then love.timer.sleep(lick.sleepTime) end
         if love.graphics then love.graphics.present() end
 
     end
