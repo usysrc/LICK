@@ -9,7 +9,7 @@ lick.file = "main.lua"
 lick.debug = false
 lick.reset = false
 lick.clearFlag = false
-lick.sleepTime = love.graphics.canvas and 0.001 or 1
+lick.sleepTime = love.graphics.newCanvas and 0.001 or 1
 
 function handle(err)
 	return "ERROR: " .. err
@@ -64,7 +64,7 @@ function lick.update(dt)
 		print("ERROR: "..tostring(err))
 		if lick.debugoutput then
 			lick.debugoutput = (lick.debugoutput .."ERROR: ".. err .. "\n" ) 
-		else lick.debugoutput =  err .. "\n" end 
+		else lick.debugoutput =  err .. "\n" end
 	end
 	
 	updateok_old = not updateok
@@ -73,7 +73,7 @@ end
 function lick.draw()
 	drawok, err = xpcall(love.draw, handle)
 	if not drawok and not drawok_old then 
-		print(tostring(err)) 
+		print(tostring(err))
 		if lick.debugoutput then
 			lick.debugoutput = (lick.debugoutput .. err .. "\n" ) 
 		else lick.debugoutput =  err .. "\n" end 
@@ -93,22 +93,10 @@ function love.run()
 
     -- Main loop time.
     while true do
-        if love.timer then
-            love.timer.step()
-            dt = love.timer.getDelta()
-        end
-       -- if love.update then love.update(dt) end -- will pass 0 if love.timer is disabled
-	      lick.update(dt)
-        if love.graphics then
-           if not lick.clearFlag then love.graphics.clear() end
-           -- if love.draw then love.draw() end
-	      lick.draw()
-        end
-
         -- Process events.
         if love.event then
-            for e,a,b,c in love.event.poll() do
-                if e == "q" then
+            for e,a,b,c,d in love.event.poll() do
+                if e == "q" or e == "quit" then
                     if not love.quit or not love.quit() then
                         if love.audio then
                             love.audio.stop()
@@ -116,8 +104,18 @@ function love.run()
                         return
                     end
                 end
-                love.handlers[e](a,b,c)
+                love.handlers[e](a,b,c,d)
             end
+        end
+
+        if love.timer then
+            love.timer.step()
+            dt = love.timer.getDelta()
+        end
+	      lick.update(dt)
+        if love.graphics then
+           if not lick.clearFlag then love.graphics.clear() end
+	         lick.draw()
         end
 
         if love.timer then love.timer.sleep(lick.sleepTime) end
