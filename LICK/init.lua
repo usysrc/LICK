@@ -1,3 +1,3 @@
-require "LICK/lick"
+require "LICK.lick"
 
 
