@@ -1,6 +1,6 @@
 -- lick.lua
 --
--- simple LIVECODING environment with löve, overwrites love.run, suppressing errors to the terminal/console
+-- simple LIVECODING environment with löve, overwrites love.run, pressing all errors to the terminal/console
 
 
 
@@ -9,7 +9,7 @@ lick.file = "main.lua"
 lick.debug = false
 lick.reset = false
 lick.clearFlag = false
-lick.sleepTime = (love.graphics.canvas) and (0.001) or 1
+lick.sleepTime = (love.graphics.canvas) and 0.001 or 1
 
 function handle(err)
 	return "ERROR: " .. err
@@ -46,18 +46,19 @@ function lick.update(dt)
 			lick.debugoutput = nil
 		end
 		if lick.reset then
-		loadok, err = xpcall(love.load, handle)
-		if not loadok and not loadok_old then 
-		print("ERROR: "..tostring(err))
-		if lick.debugoutput then
-			lick.debugoutput = (lick.debugoutput .."ERROR: ".. err .. "\n" ) 
-		else lick.debugoutput =  err .. "\n" end 
-		loadok_old = not loadok
+			loadok, err = xpcall(love.load, handle)
+			if not loadok and not loadok_old then 
+				print("ERROR: "..tostring(err))
+				if lick.debugoutput then
+					lick.debugoutput = (lick.debugoutput .."ERROR: ".. err .. "\n" ) 
+				else 
+					lick.debugoutput =  err .. "\n"
+				end 
+				loadok_old = not loadok
+			end
+		end
 	end
-
-
-	end
-	end
+	
 	updateok, err = pcall(love.update,dt)
 	if not updateok and not updateok_old then 
 		print("ERROR: "..tostring(err))
