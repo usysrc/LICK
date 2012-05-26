@@ -9,7 +9,7 @@ lick.file = "main.lua"
 lick.debug = false
 lick.reset = false
 lick.clearFlag = false
-lick.sleepTime = (love.canvas) and (0.001) or 1
+lick.sleepTime = (love.graphics.canvas) and (0.001) or 1
 
 function handle(err)
 	return "ERROR: " .. err
