@@ -4,35 +4,31 @@
 
 
 
-lick = {}
+local lick = {}
 lick.file = "main.lua"
 lick.debug = false
 lick.reset = false
 lick.clearFlag = false
-lick.sleepTime = love.graphics.newCanvas and 0.001 or 1
+lick.sleepTime = 0.001
 
-function handle(err)
+local last_modified = 0
+
+local function handle(err)
 	return "ERROR: " .. err
 end
 
-function lick.setFile(str)
-	live.file = str or "lick.lua"
-end
-
 -- Initialization
-function lick.load()
+local function load()
 	last_modified = 0
 end
 
--- load the lickcoding file and execute the contained update function
-function lick.update(dt)
-	if love.filesystem.exists(lick.file) and last_modified < love.filesystem.getLastModified(lick.file) then
+local function update(dt)
+    if love.filesystem.exists(lick.file) and last_modified < love.filesystem.getLastModified(lick.file) then
 		last_modified = love.filesystem.getLastModified(lick.file)
 		success, chunk = pcall(love.filesystem.load, lick.file)
 		if not success then
 			print(tostring(chunk))
 			lick.debugoutput = chunk .. "\n"
-
 		end
 		ok,err = xpcall(chunk, handle)
 		if not ok then 
@@ -70,8 +66,8 @@ function lick.update(dt)
 	updateok_old = not updateok
 end
 
-function lick.draw()
-	drawok, err = xpcall(love.draw, handle)
+local function draw()
+    drawok, err = xpcall(love.draw, handle)
 	if not drawok and not drawok_old then 
 		print(tostring(err))
 		if lick.debugoutput then
@@ -80,23 +76,28 @@ function lick.draw()
 	end
 	if lick.debug and lick.debugoutput then 
 		love.graphics.setColor(255,255,255,120)
-		love.graphics.printf(lick.debugoutput, (1024/2)+50, 0, 400, "right")
+		love.graphics.printf(lick.debugoutput, (love.graphics.getWidth()/2)+50, 0, 400, "right")
 	 end
 	drawok_old = not drawok
 end
 
+
 function love.run()
 
-    if love.load then love.load(arg) end
-    lick.load()
+    math.randomseed(os.time())
+    math.random() math.random()
+    load()
+    
+
     local dt = 0
 
     -- Main loop time.
     while true do
         -- Process events.
         if love.event then
+            love.event.pump()
             for e,a,b,c,d in love.event.poll() do
-                if e == "q" or e == "quit" then
+                if e == "quit" then
                     if not love.quit or not love.quit() then
                         if love.audio then
                             love.audio.stop()
@@ -108,20 +109,24 @@ function love.run()
             end
         end
 
+        -- Update dt, as we'll be passing it to update
         if love.timer then
             love.timer.step()
             dt = love.timer.getDelta()
         end
-	      lick.update(dt)
+
+        -- Call update and draw
+        if update then update(dt) end -- will pass 0 if love.timer is disabled
         if love.graphics then
-           if not lick.clearFlag then love.graphics.clear() end
-	         lick.draw()
+            love.graphics.clear()
+            if draw then draw() end
         end
 
-        if love.timer then love.timer.sleep(lick.sleepTime) end
+        if love.timer then love.timer.sleep(0.001) end
         if love.graphics then love.graphics.present() end
 
     end
 
 end
 
+return lick
