@@ -9,7 +9,7 @@ lick.file = "main.lua"
 lick.debug = false
 lick.reset = false
 lick.clearFlag = false
-lick.sleepTime = 0.001
+lick.sleepTime = love.graphics.newCanvas and 0.001 or 1
 
 local last_modified = 0
 
