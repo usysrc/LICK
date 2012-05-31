@@ -67,7 +67,7 @@ local function update(dt)
 end
 
 local function draw()
-    drawok, err = xpcall(love.draw, handle)
+	drawok, err = xpcall(love.draw, handle)
 	if not drawok and not drawok_old then 
 		print(tostring(err))
 		if lick.debugoutput then
