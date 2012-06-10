@@ -10,6 +10,7 @@ note: still in development - everything can change
 * lick.reset = true -- calls love.load everytime you save the file, if set to false it will only be called when starting Löve
 * lick.clearFlag = false -- overrides the clear() function in love.run
 
+#Example
 ```Lua
 lick = require "lick"
 lick.reset = true -- reload the love.load everytime you save
