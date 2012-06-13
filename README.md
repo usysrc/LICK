@@ -11,6 +11,8 @@ note: still in development - everything can change
 * lick.clearFlag = false -- overrides the clear() function in love.run
 
 #Example
+Here's a small example:
+
 ```Lua
 lick = require "lick"
 lick.reset = true -- reload the love.load everytime you save
@@ -27,3 +29,5 @@ end
 function love.draw(dt)
     love.graphics.circle("fill", 400+100*math.sin(circle.x), 300, 16,16)
 end
+
+Note, though, that you need to have lick.lua on the same directory as your main.lua.
