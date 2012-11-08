@@ -126,7 +126,7 @@ function love.run()
         if draw then draw() end
     end
 
-    if love.timer then love.timer.sleep(0.001) end
+    if love.timer then love.timer.sleep(lick.sleepTime) end
     if love.graphics then love.graphics.present() end
   end
 end
