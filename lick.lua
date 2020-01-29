@@ -21,8 +21,9 @@ local function load()
 end
 
 local function update(dt)
-    if love.filesystem.exists(lick.file) and last_modified < love.filesystem.getLastModified(lick.file) then
-        last_modified = love.filesystem.getLastModified(lick.file)
+    local info = love.filesystem.getInfo(lick.file)
+    if info and last_modified < info.modtime then
+        last_modified = info.modtime
         success, chunk = pcall(love.filesystem.load, lick.file)
         if not success then
             print(tostring(chunk))
