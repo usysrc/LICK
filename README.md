@@ -2,7 +2,7 @@
 
 This is a small live coding library for LÖVE. 
 
-It contains a customized [love.run](https://love2d.org/wiki/love.run) which Watches for file changes in your source and loads if necessary. Errors get redirected to the command line or on screen.
+It contains a customized [love.run](https://love2d.org/wiki/love.run) which watches for file changes in your source and loads if necessary. Errors get redirected to the command line or on screen.
 
 Needs LÖVE 11.3.
 
