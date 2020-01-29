@@ -1,6 +1,10 @@
 # Live Coding Kit For Löve
 
-A small live coding library for Löve which also enables interactive debugging. It basically just is a customized [love.run](https://love2d.org/wiki/love.run) which presses all errors to the command line(or in debug mode on screen). And reloads the “main.lua” everytime you save.
+A small live coding library for LÖVE. 
+
+It contains a customized [love.run](https://love2d.org/wiki/love.run) which Watches for file changes in your source and loads if necessary. Errors get redirected to the command line or on screen.
+
+Needs LÖVE 11.3.
 
 # Optional Parameters
 * lick.file = "<INSERT CUSTOM FILE HERE>" -- default is "main.lua"
