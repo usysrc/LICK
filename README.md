@@ -9,7 +9,7 @@ Needs LÖVE 11.3.
 # Optional Parameters
 * lick.file = "<INSERT CUSTOM FILE HERE>" -- default is "main.lua"
 * lick.debug = true -- displays errors in love window
-* lick.reset = true -- calls love.load everytime you save the file, if set to false it will only be called when starting Löve
+* lick.reset = true -- calls love.load everytime you save the file, if set to false it will only be called when starting LÖVE
 * lick.clearFlag = false -- overrides the clear() function in love.run
 
 # Example main.lua
