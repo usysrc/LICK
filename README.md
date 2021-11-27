@@ -1,4 +1,4 @@
-# livecooding library for LÖVE
+# livecoding library for LÖVE
 
 This is a small live coding library for [LÖVE](https://love2d.org). 
 
