@@ -81,7 +81,7 @@ local function draw()
     end
 
     if lick.debug and lick.debugoutput then 
-        love.graphics.setColor(255,255,255,120)
+        love.graphics.setColor(1,1,1,0.8)
         love.graphics.printf(lick.debugoutput, (love.graphics.getWidth()/2)+50, 0, 400, "right")
     end
     drawok_old = not drawok
