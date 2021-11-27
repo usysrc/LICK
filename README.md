@@ -15,7 +15,7 @@ Needs LÖVE 11.3.
 # Example main.lua
 ```Lua
 lick = require "lick"
-lick.reset = true -- reload the love.load everytime you save
+lick.reset = true -- reload love.load everytime you save
 
 function love.load()
     circle = {}

@@ -1,5 +1,5 @@
 lick = require "lick"
-lick.reset = true -- reload the love.load everytime you save
+lick.reset = true
 
 function love.load()
     circle = {}
