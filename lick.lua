@@ -1,6 +1,7 @@
 -- lick.lua
 --
--- simple LIVECODING environment with löve, overwrites love.run, pressing all errors to the terminal/console
+-- simple LIVECODING environment for Löve
+-- overwrites love.run, pressing all errors to the terminal/console
 
 local lick = {}
 lick.file = "main.lua"
@@ -123,7 +124,8 @@ function love.run()
     -- Call update and draw
     if update then update(dt) end -- will pass 0 if love.timer is disabled
     if love.graphics then
-        love.graphics.clear()
+        love.graphics.origin()
+        love.graphics.clear(love.graphics.getBackgroundColor())
         if draw then draw() end
     end
 

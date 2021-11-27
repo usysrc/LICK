@@ -11,5 +11,6 @@ function love.update(dt)
 end
 
 function love.draw(dt)
+    love.graphics.setColor(1,1,0)
     love.graphics.circle("fill", 400+100*math.sin(circle.x), 300, 16,16)
 end
