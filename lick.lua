@@ -51,7 +51,7 @@ local function checkFileUpdate()
             debugoutput = nil
         end
     end
-    if lick.reset then
+    if lick.reset and love.load then
         local loadok, err = xpcall(love.load, handle)
         if not loadok and not loadok_old then
             print("ERROR: " .. tostring(err))
