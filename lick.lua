@@ -35,19 +35,21 @@ local function checkFileUpdate()
     if not success then
         print(tostring(chunk))
         debugoutput = chunk .. "\n"
+        return
     end
-    local ok, err = xpcall(chunk, handle)
-
-    if not ok then
-        print(tostring(err))
-        if debugoutput then
-            debugoutput = (debugoutput .. "ERROR: " .. err .. "\n")
+    if chunk then
+        local ok, err = xpcall(chunk, handle)
+        if not ok then
+            print(tostring(err))
+            if debugoutput then
+                debugoutput = (debugoutput .. "ERROR: " .. err .. "\n")
+            else
+                debugoutput = err .. "\n"
+            end
         else
-            debugoutput = err .. "\n"
+            if lick.showReloadMessage then print("CHUNK LOADED\n") end
+            debugoutput = nil
         end
-    else
-        if lick.showReloadMessage then print("CHUNK LOADED\n") end
-        debugoutput = nil
     end
     if lick.reset then
         local loadok, err = xpcall(love.load, handle)
