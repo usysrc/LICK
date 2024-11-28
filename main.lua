@@ -1,9 +1,18 @@
--- this file contains an example of how to use the livecoding environment
+--
+-- This is an example how to use lick
+-- 
+
 local lick = require "lick"
-lick.reset = true
-lick.debug = true
+
+lick.file = "main.lua" -- the file to watch for changes
+lick.reset = true -- reload the whole game when a file is modified
+lick.debug = true -- show debug messages in the console
+
+-- A couple of shortcuts
 local lg = love.graphics
 local sin, cos, pi = math.sin, math.cos, math.pi
+
+-- The main love callbacks
 
 local time = 0
 function love.update(dt)
