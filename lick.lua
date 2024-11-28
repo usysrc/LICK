@@ -2,6 +2,8 @@
 --
 -- simple LIVECODING environment for Löve
 -- overwrites love.run, pressing all errors to the terminal/console or overlays it
+--
+-- What is a chunk?
 
 local lick = {}
 lick.file = "main.lua"
@@ -10,6 +12,7 @@ lick.reset = false
 lick.clearFlag = false
 lick.sleepTime = love.graphics.newCanvas and 0.001 or 1
 lick.showReloadMessage = true
+lick.chunkLoadMessage = "CHUNK LOADED"
 
 local drawok_old, updateok_old, loadok_old
 local last_modified = 0
@@ -47,7 +50,7 @@ local function checkFileUpdate()
                 debugoutput = err .. "\n"
             end
         else
-            if lick.showReloadMessage then print("CHUNK LOADED\n") end
+            if lick.showReloadMessage then print(lick.chunkLoadMessage) end
             debugoutput = nil
         end
     end
