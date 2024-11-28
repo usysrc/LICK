@@ -3,7 +3,6 @@
 -- simple LIVECODING environment for Löve
 -- overwrites love.run, pressing all errors to the terminal/console or overlays it
 --
--- What is a chunk?
 
 local lick = {}
 lick.file = "main.lua"
