@@ -4,7 +4,7 @@ This is a small live coding library for [LÖVE](https://love2d.org).
 
 It contains a customized [love.run](https://love2d.org/wiki/love.run) which watches for file changes in your source and loads if necessary. Errors get redirected to the command line or on screen.
 
-Needs LÖVE 11.3.
+Tested with LÖVE 11.5.
 
 # Optional Parameters
 * lick.file = "<INSERT CUSTOM FILE HERE>" -- default is "main.lua"
