@@ -5,7 +5,6 @@
 --
 
 local lick = {}
-lick.file = "main.lua"
 lick.debug = false
 lick.reset = false
 lick.clearFlag = false
@@ -14,26 +13,44 @@ lick.showReloadMessage = true
 lick.chunkLoadMessage = "CHUNK LOADED"
 
 local drawok_old, updateok_old, loadok_old
-local last_modified = 0
+local last_modified = {}
 local debugoutput = nil
+local luaFiles = {}
 
 -- Error handler wrapping for pcall
 local function handle(err)
     return "ERROR: " .. err
 end
 
--- Initialization
-local function load()
-    last_modified = 0
+-- Function to load all .lua files in the directory and subdirectories
+local function loadLuaFiles(dir)
+    dir = dir or ""
+    local files = love.filesystem.getDirectoryItems(dir)
+    for _, file in ipairs(files) do
+        local filePath = dir .. (dir ~= "" and "/" or "") .. file
+        local info = love.filesystem.getInfo(filePath)
+        if info.type == "file" and file:sub(-4) == ".lua" then
+            table.insert(luaFiles, filePath)
+        elseif info.type == "directory" then
+            loadLuaFiles(filePath)
+        end
+    end
 end
 
-local function checkFileUpdate()
-    local info = love.filesystem.getInfo(lick.file)
-    if not info or last_modified >= info.modtime then
-        return
+-- Initialization
+local function load()
+    -- Load all lua files in the directory
+    loadLuaFiles()
+
+    -- init the lastmodified table for all lua files
+    for _, file in ipairs(luaFiles) do
+        local info = love.filesystem.getInfo(file)
+        last_modified[file] = info.modtime
     end
-    last_modified = info.modtime
-    local success, chunk = pcall(love.filesystem.load, lick.file)
+end
+
+local function reloadFile(file)
+    local success, chunk = pcall(love.filesystem.load, file)
     if not success then
         print(tostring(chunk))
         debugoutput = chunk .. "\n"
@@ -53,6 +70,7 @@ local function checkFileUpdate()
             debugoutput = nil
         end
     end
+    
     if lick.reset and love.load then
         local loadok, err = xpcall(love.load, handle)
         if not loadok and not loadok_old then
@@ -64,6 +82,29 @@ local function checkFileUpdate()
             end
             loadok_old = not loadok
         end
+    end
+end
+
+-- if a file is modified, reload all files
+local function checkFileUpdate()
+    local modified = false
+    for _, file in ipairs(luaFiles) do
+        local info = love.filesystem.getInfo(file)
+        if info then
+            if info.modtime > last_modified[file] then
+                modified = true
+            end
+        end
+    end
+    if not modified then return end
+    -- remove all files from the require cache
+    for k, _ in pairs(package.loaded) do
+        package.loaded[k] = nil
+    end
+    for _, file in ipairs(luaFiles) do
+        reloadFile(file)
+        local info = love.filesystem.getInfo(file)
+        last_modified[file] = info.modtime
     end
 end
 

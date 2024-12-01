@@ -3,9 +3,8 @@
 -- 
 
 local lick = require "lick"
+local divider = require "divider"
 
-lick.file = "main.lua" -- the file to watch for changes
-lick.reset = true -- reload the whole game when a file is modified
 lick.debug = true -- show debug messages in the console
 
 -- A couple of shortcuts
@@ -20,6 +19,7 @@ function love.update(dt)
 end
 
 function love.draw(dt)
+    lg.push()
     lg.setBlendMode("alpha")
     lg.translate(lg.getWidth() / 2, lg.getHeight() / 2)
     lg.rotate(1 * pi * cos(time / 10))
@@ -31,4 +31,6 @@ function love.draw(dt)
             300 * sin(i / 4 * pi + time / 10),
             200 * cos(i / 4 * pi + time / 5), 128)
     end
+    lg.pop()
+    divider.draw()
 end
