@@ -6,7 +6,7 @@
 
 local lick = {}
 lick.debug = false -- show debug output
-lick.reset = false -- reset the game on file change
+lick.reset = false -- reset the game and call love.load on file change
 lick.clearFlag = false -- clear the screen on file change
 lick.sleepTime = love.graphics.newCanvas and 0.001 or 1 -- sleep time in seconds
 lick.showReloadMessage = true -- show message when a file is reloaded
