@@ -45,7 +45,7 @@ local function load()
     -- init the lastmodified table for all lua files
     for _, file in ipairs(luaFiles) do
         local info = love.filesystem.getInfo(file)
-        last_modified[file] = info.modtime
+        last_modified[file] = 0
     end
 end
 
