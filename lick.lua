@@ -12,7 +12,7 @@ lick.sleepTime = love.graphics.newCanvas and 0.001 or 1 -- sleep time in seconds
 lick.showReloadMessage = true -- show message when a file is reloaded
 lick.chunkLoadMessage = "CHUNK LOADED"
 lick.updateAllFiles = false -- include files in watchlist for changes
-lick.clearPackages = false -- clear all packages on file change
+lick.clearPackages = false -- clear all packages in package.loaded on file change
 lick.defaultFile = "main.lua" -- default file to load
 
 -- local variables
