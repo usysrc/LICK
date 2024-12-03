@@ -1,10 +1,24 @@
 # livecoding library for LÖVE
 
-This is a small live coding library for [LÖVE](https://love2d.org). 
+This is a small live coding library for [LÖVE](https://love2d.org).
 
-It contains a customized [love.run](https://love2d.org/wiki/love.run) which watches for file changes in your source and loads if necessary. Errors get redirected to the command line or on screen.
+## Overview
 
-Tested with LÖVE 11.5.
+The livecoding library for LÖVE provides a simple and efficient way to live code in the LÖVE framework. It allows developers to see changes in their code in real-time without restarting the application. This is achieved by monitoring file changes and reloading the necessary files automatically.
+
+### Key Features
+- **Automatic Reloading**: Watches for changes in your source files and reloads them as needed.
+- **Error Handling**: Redirects errors to the command line or displays them on the screen, making debugging easier.
+- **Customizable**: Offers several optional parameters to customize the behavior of the live coding environment.
+- **Compatibility**: Tested and works seamlessly with LÖVE 11.5.
+
+### How It Works
+
+The library overrides the default [love.run](https://love2d.org/wiki/love.run) function to include file watching capabilities. When a file change is detected, it reloads the file and optionally calls `love.load` to reset the game state. Errors encountered during the reload process are captured and displayed either in the console or on the screen, depending on the configuration.
+
+### Getting Started
+
+To use the livecoding library, simply require it in your `main.lua` file and set the desired parameters. The library will handle the rest, ensuring that your changes are reflected in real-time.
 
 # Optional Parameters
 * lick.files = {"main.lua", "anotherfile.lua"} -- list of files to watch, default is {"main.lua"}
