@@ -5,13 +5,17 @@
 --
 
 local lick = {}
-lick.debug = false
-lick.reset = false
-lick.clearFlag = false
-lick.sleepTime = love.graphics.newCanvas and 0.001 or 1
-lick.showReloadMessage = true
+lick.debug = false -- show debug output
+lick.reset = false -- reset the game on file change
+lick.clearFlag = false -- clear the screen on file change
+lick.sleepTime = love.graphics.newCanvas and 0.001 or 1 -- sleep time in seconds
+lick.showReloadMessage = true -- show message when a file is reloaded
 lick.chunkLoadMessage = "CHUNK LOADED"
+lick.updateAllFiles = false -- include files in watchlist for changes
+lick.clearPackages = false -- clear all packages on file change
+lick.defaultFile = "main.lua" -- default file to load
 
+-- local variables
 local drawok_old, updateok_old, loadok_old
 local last_modified = {}
 local debugoutput = nil
@@ -24,6 +28,10 @@ end
 
 -- Function to load all .lua files in the directory and subdirectories
 local function loadLuaFiles(dir)
+    if not lick.updateAllFiles then
+        table.insert(luaFiles, lick.defaultFile)
+        return
+    end
     dir = dir or ""
     local files = love.filesystem.getDirectoryItems(dir)
     for _, file in ipairs(files) do
@@ -45,7 +53,7 @@ local function load()
     -- init the lastmodified table for all lua files
     for _, file in ipairs(luaFiles) do
         local info = love.filesystem.getInfo(file)
-        last_modified[file] = 0
+        last_modified[file] = info.modtime
     end
 end
 
@@ -98,8 +106,10 @@ local function checkFileUpdate()
     end
     if not modified then return end
     -- remove all files from the require cache
-    for k, _ in pairs(package.loaded) do
-        package.loaded[k] = nil
+    if lick.clearPackages then
+        for k, _ in pairs(package.loaded) do
+            package.loaded[k] = nil
+        end
     end
     for _, file in ipairs(luaFiles) do
         reloadFile(file)
@@ -142,11 +152,15 @@ end
 
 
 function love.run()
+    if love.load then love.load(love.arg.parseGameArguments(arg), arg) end
     math.randomseed(os.time())
     math.random()
     math.random()
     load()
 
+    -- We don't want the first frame's dt to include time taken by love.load.
+	if love.timer then love.timer.step() end
+    
     local dt = 0
 
     -- Main loop time.

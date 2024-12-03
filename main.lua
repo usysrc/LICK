@@ -3,17 +3,22 @@
 -- 
 
 local lick = require "lick"
+lick.updateAllFiles = true
+lick.clearPackages = true
+
 local divider = require "divider"
 
-lick.debug = true -- show debug messages in the console
 
 -- A couple of shortcuts
 local lg = love.graphics
 local sin, cos, pi = math.sin, math.cos, math.pi
 
 -- The main love callbacks
+local time = time or 0
+function love.load()
+    time = 0
+end
 
-local time = 0
 function love.update(dt)
     time = time + dt
 end
@@ -33,4 +38,5 @@ function love.draw(dt)
     end
     lg.pop()
     divider.draw()
+    love.graphics.print(time)
 end
