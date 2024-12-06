@@ -2,7 +2,7 @@ package = "lick"
 version = "0.2-0"
 source = {
     url = "git://github.com/usysrc/lick",
-    tag = "v0.2.0"
+    tag = "v0.1.0"
 }
 description = {
     summary = "A small live coding library for LÖVE",
