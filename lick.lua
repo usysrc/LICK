@@ -5,15 +5,15 @@
 --
 
 local lick = {}
-lick.debug = false                                      -- show debug output
-lick.reset = false                                      -- reset the game and call love.load on file change
-lick.clearFlag = false                                  -- clear the screen on file change
-lick.sleepTime = love.graphics.newCanvas and 0.001 or 1 -- sleep time in seconds
-lick.showReloadMessage = true                           -- show message when a file is reloaded
-lick.chunkLoadMessage = "CHUNK LOADED"                  -- message to show when a chunk is loaded
-lick.updateAllFiles = false                             -- include files in watchlist for changes
-lick.clearPackages = false                              -- clear all packages in package.loaded on file change
-lick.defaultFile = "main.lua"                           -- default file to load
+lick.debug = false                     -- show debug output
+lick.reset = false                     -- reset the game and call love.load on file change
+lick.clearFlag = false                 -- clear the screen on file change
+lick.sleepTime = 0.001                 -- sleep time in seconds
+lick.showReloadMessage = true          -- show message when a file is reloaded
+lick.chunkLoadMessage = "CHUNK LOADED" -- message to show when a chunk is loaded
+lick.updateAllFiles = false            -- include files in watchlist for changes
+lick.clearPackages = false             -- clear all packages in package.loaded on file change
+lick.defaultFile = "main.lua"          -- default file to load
 
 -- local variables
 local drawok_old, updateok_old, loadok_old
