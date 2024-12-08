@@ -152,11 +152,12 @@ end
 
 
 function love.run()
+    load()
     if love.load then love.load(love.arg.parseGameArguments(arg), arg) end
     math.randomseed(os.time())
     math.random()
     math.random()
-    load()
+
 
     -- We don't want the first frame's dt to include time taken by love.load.
     if love.timer then love.timer.step() end
