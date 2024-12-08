@@ -1,6 +1,6 @@
 --
 -- This is an example how to use lick
--- 
+--
 
 local lick = require "lick"
 lick.updateAllFiles = true
@@ -14,7 +14,7 @@ local lg = love.graphics
 local sin, cos, pi = math.sin, math.cos, math.pi
 
 -- The main love callbacks
-local time = time or 0
+local time = 0
 function love.load()
     time = 0
 end
