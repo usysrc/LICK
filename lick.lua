@@ -154,10 +154,16 @@ end
 function love.run()
     load()
     if love.load then love.load(love.arg.parseGameArguments(arg), arg) end
-    math.randomseed(os.time())
-    math.random()
-    math.random()
 
+    -- Workaround for macOS random number generator issue
+    -- On macOS, the random number generator can produce the same sequence of numbers
+    -- if not properly seeded. This workaround ensures that the random number generator
+    -- is seeded correctly to avoid this issue.
+    if jit and jit.os == "OSX" then
+        math.randomseed(os.time())
+        math.random()
+        math.random()
+    end
 
     -- We don't want the first frame's dt to include time taken by love.load.
     if love.timer then love.timer.step() end
