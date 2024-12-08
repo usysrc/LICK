@@ -18,8 +18,8 @@ lick.defaultFile = "main.lua"                           -- default file to load
 -- local variables
 local drawok_old, updateok_old, loadok_old
 local last_modified = {}
-local debugoutput = nil
-local luaFiles = {}
+local debug_output = nil
+local lua_files = {}
 
 -- Error handler wrapping for pcall
 local function handle(err)
@@ -29,7 +29,7 @@ end
 -- Function to load all .lua files in the directory and subdirectories
 local function loadLuaFiles(dir)
     if not lick.updateAllFiles then
-        table.insert(luaFiles, lick.defaultFile)
+        table.insert(lua_files, lick.defaultFile)
         return
     end
     dir = dir or ""
@@ -38,7 +38,7 @@ local function loadLuaFiles(dir)
         local filePath = dir .. (dir ~= "" and "/" or "") .. file
         local info = love.filesystem.getInfo(filePath)
         if info.type == "file" and file:sub(-4) == ".lua" then
-            table.insert(luaFiles, filePath)
+            table.insert(lua_files, filePath)
         elseif info.type == "directory" then
             loadLuaFiles(filePath)
         end
@@ -51,7 +51,7 @@ local function load()
     loadLuaFiles()
 
     -- init the lastmodified table for all lua files
-    for _, file in ipairs(luaFiles) do
+    for _, file in ipairs(lua_files) do
         local info = love.filesystem.getInfo(file)
         last_modified[file] = info.modtime
     end
@@ -61,21 +61,21 @@ local function reloadFile(file)
     local success, chunk = pcall(love.filesystem.load, file)
     if not success then
         print(tostring(chunk))
-        debugoutput = chunk .. "\n"
+        debug_output = chunk .. "\n"
         return
     end
     if chunk then
         local ok, err = xpcall(chunk, handle)
         if not ok then
             print(tostring(err))
-            if debugoutput then
-                debugoutput = (debugoutput .. "ERROR: " .. err .. "\n")
+            if debug_output then
+                debug_output = (debug_output .. "ERROR: " .. err .. "\n")
             else
-                debugoutput = err .. "\n"
+                debug_output = err .. "\n"
             end
         else
             if lick.showReloadMessage then print(lick.chunkLoadMessage) end
-            debugoutput = nil
+            debug_output = nil
         end
     end
 
@@ -83,10 +83,10 @@ local function reloadFile(file)
         local loadok, err = xpcall(love.load, handle)
         if not loadok and not loadok_old then
             print("ERROR: " .. tostring(err))
-            if debugoutput then
-                debugoutput = (debugoutput .. "ERROR: " .. err .. "\n")
+            if debug_output then
+                debug_output = (debug_output .. "ERROR: " .. err .. "\n")
             else
-                debugoutput = err .. "\n"
+                debug_output = err .. "\n"
             end
             loadok_old = not loadok
         end
@@ -96,7 +96,7 @@ end
 -- if a file is modified, reload all files
 local function checkFileUpdate()
     local modified = false
-    for _, file in ipairs(luaFiles) do
+    for _, file in ipairs(lua_files) do
         local info = love.filesystem.getInfo(file)
         if info then
             if info.modtime > last_modified[file] then
@@ -111,7 +111,7 @@ local function checkFileUpdate()
             package.loaded[k] = nil
         end
     end
-    for _, file in ipairs(luaFiles) do
+    for _, file in ipairs(lua_files) do
         reloadFile(file)
         local info = love.filesystem.getInfo(file)
         last_modified[file] = info.modtime
@@ -123,10 +123,10 @@ local function update(dt)
     local updateok, err = pcall(love.update, dt)
     if not updateok and not updateok_old then
         print("ERROR: " .. tostring(err))
-        if debugoutput then
-            debugoutput = (debugoutput .. "ERROR: " .. err .. "\n")
+        if debug_output then
+            debug_output = (debug_output .. "ERROR: " .. err .. "\n")
         else
-            debugoutput = err .. "\n"
+            debug_output = err .. "\n"
         end
     end
     updateok_old = not updateok
@@ -136,16 +136,16 @@ local function draw()
     local drawok, err = xpcall(love.draw, handle)
     if not drawok and not drawok_old then
         print(tostring(err))
-        if debugoutput then
-            debugoutput = (debugoutput .. err .. "\n")
+        if debug_output then
+            debug_output = (debug_output .. err .. "\n")
         else
-            debugoutput = err .. "\n"
+            debug_output = err .. "\n"
         end
     end
 
-    if lick.debug and debugoutput then
+    if lick.debug and debug_output then
         love.graphics.setColor(1, 1, 1, 0.8)
-        love.graphics.printf(debugoutput, (love.graphics.getWidth() / 2) + 50, 0, 400, "right")
+        love.graphics.printf(debug_output, (love.graphics.getWidth() / 2) + 50, 0, 400, "right")
     end
     drawok_old = not drawok
 end
