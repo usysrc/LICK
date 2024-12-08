@@ -25,7 +25,7 @@ To use the livecoding library, simply require it in your `main.lua` file and set
 * lick.debug = true -- displays errors in love window
 * lick.reset = true -- calls love.load every time you save the file, if set to false it will only be called when starting LÖVE
 * lick.clearFlag = false -- overrides the clear() function in love.run
-* lick.sleepTime = 0.001 -- sleep time in seconds, default is 0.001 if love.graphics.newCanvas is available, otherwise 1
+* lick.sleepTime = 0.001 -- sleep time in seconds, default is 0.001
 * lick.showReloadMessage = true -- show message when a file is reloaded
 * lick.chunkLoadMessage = "CHUNK LOADED" -- message to show when a chunk is loaded
 * lick.updateAllFiles = false -- include all .lua files in the directory and subdirectories in the watchlist for changes
