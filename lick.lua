@@ -5,15 +5,15 @@
 --
 
 local lick = {}
-lick.debug = false -- show debug output
-lick.reset = false -- reset the game and call love.load on file change
-lick.clearFlag = false -- clear the screen on file change
+lick.debug = false                                      -- show debug output
+lick.reset = false                                      -- reset the game and call love.load on file change
+lick.clearFlag = false                                  -- clear the screen on file change
 lick.sleepTime = love.graphics.newCanvas and 0.001 or 1 -- sleep time in seconds
-lick.showReloadMessage = true -- show message when a file is reloaded
+lick.showReloadMessage = true                           -- show message when a file is reloaded
 lick.chunkLoadMessage = "CHUNK LOADED"
-lick.updateAllFiles = false -- include files in watchlist for changes
-lick.clearPackages = false -- clear all packages in package.loaded on file change
-lick.defaultFile = "main.lua" -- default file to load
+lick.updateAllFiles = false                             -- include files in watchlist for changes
+lick.clearPackages = false                              -- clear all packages in package.loaded on file change
+lick.defaultFile = "main.lua"                           -- default file to load
 
 -- local variables
 local drawok_old, updateok_old, loadok_old
@@ -78,7 +78,7 @@ local function reloadFile(file)
             debugoutput = nil
         end
     end
-    
+
     if lick.reset and love.load then
         local loadok, err = xpcall(love.load, handle)
         if not loadok and not loadok_old then
@@ -159,8 +159,8 @@ function love.run()
     load()
 
     -- We don't want the first frame's dt to include time taken by love.load.
-	if love.timer then love.timer.step() end
-    
+    if love.timer then love.timer.step() end
+
     local dt = 0
 
     -- Main loop time.
