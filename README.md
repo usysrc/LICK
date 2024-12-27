@@ -18,7 +18,7 @@ The library overrides the default [love.run](https://love2d.org/wiki/love.run) f
 
 ### Getting Started
 
-To use the livecoding library, simply require it in your `main.lua` file and set the desired parameters. The library will handle the rest, ensuring that your changes are reflected in real-time.
+To use the livecoding library, simply copy `lick.lua` into your project and require it in your own `main.lua` file and set the desired parameters. The library will handle the rest, ensuring that your changes are reflected in real-time.
 
 # Optional Parameters
 * lick.files = {"main.lua", "anotherfile.lua"} -- list of files to watch, default is {"main.lua"}
