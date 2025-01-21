@@ -20,17 +20,17 @@ lick.fileExtensions = { ".lua" }       -- file extensions to watch
 local drawok_old, updateok_old, loadok_old
 local last_modified = {}
 local debug_output = nil
-local lua_files = {}
+local working_files = {}
 
 -- Error handler wrapping for pcall
 local function handle(err)
     return "ERROR: " .. err
 end
 
--- Function to load all .lua files in the directory and subdirectories
-local function loadLuaFiles(dir)
+-- Function to load all files in the directory and subdirectories with the given extensions
+local function loadWorkingFiles(dir)
     if not lick.updateAllFiles then
-        table.insert(lua_files, lick.defaultFile)
+        table.insert(working_files, lick.defaultFile)
         return
     end
     dir = dir or ""
@@ -38,25 +38,25 @@ local function loadLuaFiles(dir)
     for _, file in ipairs(files) do
         local filePath = dir .. (dir ~= "" and "/" or "") .. file
         local info = love.filesystem.getInfo(filePath)
-        if info.type == "file" and file:sub(-4) == ".lua" then
+        if info.type == "file" then
             for _, ext in ipairs(lick.fileExtensions) do
                 if file:sub(- #ext) == ext then
-                    table.insert(lua_files, filePath)
+                    table.insert(working_files, filePath)
                 end
             end
         elseif info.type == "directory" then
-            loadLuaFiles(filePath)
+            loadWorkingFiles(filePath)
         end
     end
 end
 
 -- Initialization
 local function load()
-    -- Load all lua files in the directory
-    loadLuaFiles()
+    -- Load all files in the directory
+    loadWorkingFiles()
 
-    -- init the lastmodified table for all lua files
-    for _, file in ipairs(lua_files) do
+    -- init the lastmodified table for all working files
+    for _, file in ipairs(working_files) do
         local info = love.filesystem.getInfo(file)
         last_modified[file] = info.modtime
     end
@@ -101,7 +101,7 @@ end
 -- if a file is modified, reload all files
 local function checkFileUpdate()
     local modified = false
-    for _, file in ipairs(lua_files) do
+    for _, file in ipairs(working_files) do
         local info = love.filesystem.getInfo(file)
         if info then
             if info.modtime > last_modified[file] then
@@ -116,7 +116,7 @@ local function checkFileUpdate()
             package.loaded[k] = nil
         end
     end
-    for _, file in ipairs(lua_files) do
+    for _, file in ipairs(working_files) do
         reloadFile(file)
         local info = love.filesystem.getInfo(file)
         last_modified[file] = info.modtime
