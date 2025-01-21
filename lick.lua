@@ -14,6 +14,7 @@ lick.chunkLoadMessage = "CHUNK LOADED" -- message to show when a chunk is loaded
 lick.updateAllFiles = false            -- include files in watchlist for changes
 lick.clearPackages = false             -- clear all packages in package.loaded on file change
 lick.defaultFile = "main.lua"          -- default file to load
+lick.fileExtensions = { ".lua" }       -- file extensions to watch
 
 -- local variables
 local drawok_old, updateok_old, loadok_old
@@ -38,7 +39,11 @@ local function loadLuaFiles(dir)
         local filePath = dir .. (dir ~= "" and "/" or "") .. file
         local info = love.filesystem.getInfo(filePath)
         if info.type == "file" and file:sub(-4) == ".lua" then
-            table.insert(lua_files, filePath)
+            for _, ext in ipairs(lick.fileExtensions) do
+                if file:sub(- #ext) == ext then
+                    table.insert(lua_files, filePath)
+                end
+            end
         elseif info.type == "directory" then
             loadLuaFiles(filePath)
         end
