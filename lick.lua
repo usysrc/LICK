@@ -15,6 +15,7 @@ lick.updateAllFiles = false            -- include files in watchlist for changes
 lick.clearPackages = false             -- clear all packages in package.loaded on file change
 lick.defaultFile = "main.lua"          -- default file to load
 lick.fileExtensions = { ".lua" }       -- file extensions to watch
+lick.entryPoint = "main.lua"           -- entry point for the game, if empty, all files are reloaded
 
 -- local variables
 local drawok_old, updateok_old, loadok_old
@@ -116,8 +117,14 @@ local function checkFileUpdate()
             package.loaded[k] = nil
         end
     end
+
+    if lick.entryPoint ~= "" then
+        reloadFile(lick.entryPoint)
+    end
     for _, file in ipairs(working_files) do
-        reloadFile(file)
+        if lick.entryPoint == "" then
+            reloadFile(file)
+        end
         local info = love.filesystem.getInfo(file)
         last_modified[file] = info.modtime
     end
