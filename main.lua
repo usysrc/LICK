@@ -8,7 +8,6 @@ lick.clearPackages = true
 
 local divider = require "divider"
 
-
 -- A couple of shortcuts
 local lg = love.graphics
 local sin, cos, pi = math.sin, math.cos, math.pi
@@ -39,4 +38,8 @@ function love.draw(dt)
     lg.pop()
     divider.draw()
     love.graphics.print(time)
+end
+
+function load()
+    print("hi")
 end
