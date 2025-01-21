@@ -120,6 +120,7 @@ end
 
 local function update(dt)
     checkFileUpdate()
+    if not love.update then return end
     local updateok, err = pcall(love.update, dt)
     if not updateok and not updateok_old then
         print("ERROR: " .. tostring(err))
